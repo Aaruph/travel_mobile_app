@@ -102,7 +102,7 @@ class TripCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Image.asset('assets/sample_trip.jpg', fit: BoxFit.cover),
+                child: Image.asset('assets/images/rara_lake.jpg', fit: BoxFit.cover),
               ),
               const SizedBox(height: 4),
               Text(
@@ -151,7 +151,7 @@ class GroupTripCard extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Image.asset('assets/sample_group_trip.jpg', fit: BoxFit.cover),
+              child: Image.asset('assets/images/mount_everest.jpg', fit: BoxFit.cover),
             ),
           ],
         ),
