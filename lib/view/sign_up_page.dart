@@ -4,154 +4,170 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final _formKey = GlobalKey<FormState>();
-  bool _isChecked = false; // Checkbox state
+  // Controllers for input fields
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  // Temporary storage for user credentials
-  String? _email;
-  String? _password;
+  bool rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'SIGN UP',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+      backgroundColor: const Color(0xFF00788C), // Background color
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20),
+              // Title Text
+              const Text(
+                "Let's start your\nJourney together!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 20),
-                buildTextField('First name', 'Please enter your first name'),
-                const SizedBox(height: 15),
-                buildTextField('Last name', 'Please enter your last name'),
-                const SizedBox(height: 15),
-                buildTextField('Email', 'Please enter a valid email',
-                    onSaved: (value) => _email = value),
-                const SizedBox(height: 15),
-                buildTextField('Phone number',
-                    'Please enter a valid phone number (10 digits)'),
-                const SizedBox(height: 15),
-                buildTextField(
-                    'Password', 'Password must be at least 6 characters',
-                    isPassword: true, onSaved: (value) => _password = value),
-                const SizedBox(height: 15),
-                buildTextField('Confirm password',
-                    'Password must be at least 6 characters',
-                    isPassword: true),
-                const SizedBox(height: 15),
-                Row(
+              ),
+              const SizedBox(height: 20),
+              // Form Box with Logo and Inputs
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
                   children: [
-                    Checkbox(
-                      value: _isChecked,
-                      onChanged: (value) {
-                        setState(() {
-                          _isChecked = value ?? false;
-                        });
-                      },
+                    // Logo Inside the Box
+                    Image.asset(
+                      'assets/images/travel_logo.png', // Replace with your asset path
+                      height: 100,
                     ),
-                    const Expanded(
-                      child: Text(
-                        "I agree to all terms and conditions.",
-                        style: TextStyle(fontSize: 14),
+                    const SizedBox(height: 10),
+                    // Email Input
+                    TextField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.email, color: Colors.teal),
+                        labelText: 'Email',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // Username Input
+                    TextField(
+                      controller: usernameController,
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.person, color: Colors.teal),
+                        labelText: 'Username',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // Password Input
+                    TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.lock, color: Colors.teal),
+                        labelText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // Remember Me & Forgot Password
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: rememberMe,
+                              onChanged: (value) {
+                                setState(() {
+                                  rememberMe = value!;
+                                });
+                              },
+                              activeColor: Colors.teal,
+                            ),
+                            const Text("Remember me"),
+                          ],
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            // Forgot Password functionality here
+                          },
+                          child: const Text(
+                            "Forgot Password?",
+                            style: TextStyle(color: Colors.teal),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    // Sign Up Button
+                    ElevatedButton(
+                      onPressed: () {
+                        // Navigate to Login Page
+                        Navigator.pushNamed(context, '/login');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        minimumSize: const Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Sign up",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (_isChecked) {
-                        _formKey.currentState!.save();
-                        Navigator.pushReplacementNamed(context, '/login',
-                            arguments: {
-                              'email': _email,
-                              'password': _password,
-                            });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content:
-                                  Text("Sign-up successful! Please log in.")),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("You must accept the terms."),
-                          ),
-                        );
-                      }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              ),
+              const SizedBox(height: 20),
+              // Bottom Navigation to Login
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Already have an account?",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    child: const Text(
+                      "Sign in",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Sign Up",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(width: 10),
-                      Icon(Icons.arrow_forward),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-
-  Widget buildTextField(String label, String errorMessage,
-      {bool isPassword = false, Function(String?)? onSaved}) {
-    return TextFormField(
-      obscureText: isPassword,
-      decoration: InputDecoration(
-        labelText: label,
-        border: const OutlineInputBorder(),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return errorMessage;
-        }
-        if (label == 'Phone number' && value.length != 10) {
-          return errorMessage;
-        }
-        return null;
-      },
-      onSaved: onSaved,
-    );
-  }
 }
-

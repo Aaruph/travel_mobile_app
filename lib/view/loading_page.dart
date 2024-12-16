@@ -13,7 +13,7 @@ class _LoadingPageViewState extends State<LoadingPage> {
     super.initState();
     // Redirect to login page after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/onboarding');
     });
   }
 
@@ -23,6 +23,7 @@ class _LoadingPageViewState extends State<LoadingPage> {
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
+          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // App Logo
