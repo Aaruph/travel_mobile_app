@@ -34,7 +34,7 @@ class _LoadingPageViewState extends State<LoadingPage> {
             const SizedBox(height: 20),
             // Progress Indicator
             const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
             ),
           ],
         ),

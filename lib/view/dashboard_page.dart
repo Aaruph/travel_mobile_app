@@ -1,160 +1,73 @@
-// view/dashboard_page.dart
-import 'package:flutter/material.dart';
 
-class DashboardPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:travel_mobile_app/view/chat_page.dart';
+import 'package:travel_mobile_app/view/favorites_page.dart';
+import 'package:travel_mobile_app/view/home_page.dart'; // Import HomePage
+import 'package:travel_mobile_app/view/profile_page.dart';
+
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    const HomePage(), // Replace DashboardContent with HomePage
+    const ChatPage(),
+    const FavoritesPage(),
+    const ProfilePage(),
+  ];
+
+  final List<String> _appBarTitles = [
+    'Dashboard',
+    'Chat',
+    'Favorites',
+    'Profile',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        backgroundColor: const Color(0xFF007D8C),
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(
+          _appBarTitles[_currentIndex],
+          style: const TextStyle(color: Colors.white),
+        ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications),
-          ),
+          if (_currentIndex == 0)
+            IconButton(
+              icon: const Icon(Icons.notifications, color: Colors.white),
+              onPressed: () {},
+            ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Location',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const Row(
-                children: [
-                  Icon(Icons.location_on),
-                  SizedBox(width: 8),
-                  Text('Kathmandu, Nepal'),
-                ],
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.filter_list),
-                    onPressed: () {},
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Top Trips',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 150,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    TripCard(title: 'Rara Lake', price: '\$40/Visit'),
-                    TripCard(title: 'Tilicho Lake', price: '\$40/Visit'),
-                    TripCard(title: 'Shey-Phoksundo Lake', price: '\$40/Visit'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Group Trips',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const GroupTripCard(
-                title: 'Mountain Trip',
-                location: 'Mount Everest Base Camp',
-                progress: 0.8,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TripCard extends StatelessWidget {
-  final String title;
-  final String price;
-
-  const TripCard({super.key, required this.title, required this.price});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(right: 8),
-      child: SizedBox(
-        width: 120,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Image.asset('assets/images/rara_lake.jpg', fit: BoxFit.cover),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(price),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class GroupTripCard extends StatelessWidget {
-  final String title;
-  final String location;
-  final double progress;
-
-  // ignore: use_key_in_widget_constructors
-  const GroupTripCard({required this.title, required this.location, required this.progress});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(location),
-                  const SizedBox(height: 8),
-                  LinearProgressIndicator(value: progress),
-                ],
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Image.asset('assets/images/mount_everest.jpg', fit: BoxFit.cover),
-            ),
-          ],
-        ),
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        backgroundColor: const Color(0xFF007D8C),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: 'Chat'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favorites'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
       ),
     );
   }
