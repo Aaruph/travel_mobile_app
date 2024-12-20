@@ -8,7 +8,6 @@ import 'package:travel_mobile_app/view/sign_up_page.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
