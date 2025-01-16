@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:travel_mobile_app/core/app_theme/app_theme.dart';
-import 'package:travel_mobile_app/view/dashboard_page.dart';
-import 'package:travel_mobile_app/view/loading_page.dart';
-import 'package:travel_mobile_app/view/login_page.dart';
-import 'package:travel_mobile_app/view/onboarding_page.dart';
-import 'package:travel_mobile_app/view/sign_up_page.dart';
+import 'package:travel_mobile_app/core/theme/app_theme.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/dashboard_page.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/loading_page.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/login_page.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/onboarding_page.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/sign_up_page.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

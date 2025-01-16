@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:travel_mobile_app/view/chat_page.dart';
-import 'package:travel_mobile_app/view/favorites_page.dart';
-import 'package:travel_mobile_app/view/home_page.dart'; // Import HomePage
-import 'package:travel_mobile_app/view/profile_page.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/chat_page.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/favorites_page.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/home_page.dart'; // Import HomePage
+import 'package:travel_mobile_app/features/auth/presentation/view/profile_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
