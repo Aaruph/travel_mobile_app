@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../onboarding/presentation/view/onboarding_view.dart';
-import '../../../onboarding/presentation/view_model/onboarding_cubit.dart';
+import '../../../auth/presentation/view/login_view.dart';
+import '../../../auth/presentation/view_model/login/login_bloc.dart';
 
 
-class SplashCubit extends Cubit<void> {
-  SplashCubit(this._onboardingCubit) : super(null);
+class OnboardingCubit extends Cubit<void> {
+  OnboardingCubit(this._loginBloc) : super(null);
 
-  final OnboardingCubit _onboardingCubit;
+  final LoginBloc _loginBloc;
 
   Future<void> init(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 2), () async {
@@ -19,8 +19,8 @@ class SplashCubit extends Cubit<void> {
           context,
           MaterialPageRoute(
             builder: (context) => BlocProvider.value(
-              value: _onboardingCubit,
-              child: OnboardingView(),
+              value: _loginBloc,
+              child: LoginView(),
             ),
           ),
         );
