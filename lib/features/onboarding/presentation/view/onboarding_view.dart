@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../view_model/onboarding_cubit.dart';
 
-
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
 
@@ -20,20 +19,20 @@ class _OnboardingScreenState extends State<OnboardingView> {
       "image": "assets/images/hiking.png",
       "title": "Welcome",
       "description":
-          "It's a pleasure to meet you. We are excited that you're here so let's get started."
+          "We're thrilled to have you! Let's explore new destinations together."
     },
     {
       "image": "assets/images/hiking.png",
-      "title": "All Your Favourites",
+      "title": "Discover New Places",
       "description":
-          "Get your favourite meals delivered fresh and fast with just a few taps!"
+          "Find breathtaking destinations and exciting experiences tailored just for you."
     },
     {
-      "image": "assets/images/",
-      "title": "Super Fast Delivery",
+      "image": "assets/images/hiking.png",
+      "title": "Easy & Fast Booking",
       "description":
-          "Easily find your type of food craving and you will get fast delivery in wide range."
-    },
+          "Book flights, hotels, and trips effortlessly, all in one place."
+    }
   ];
 
   void _goToLoginPage(BuildContext context) {
@@ -43,6 +42,7 @@ class _OnboardingScreenState extends State<OnboardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -193,7 +193,7 @@ class _OnboardingScreenState extends State<OnboardingView> {
       height: 8,
       width: _currentPage == index ? 20 : 8,
       decoration: BoxDecoration(
-        color: _currentPage == index ? Colors.orange : Colors.grey.shade300,
+        color: _currentPage == index ? Colors.teal : Colors.grey.shade300,
         borderRadius: BorderRadius.circular(4),
       ),
     );

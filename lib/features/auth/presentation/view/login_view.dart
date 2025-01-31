@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/register_view.dart';
 
 import '../view_model/login/login_bloc.dart';
-import 'register_view.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
@@ -171,38 +171,48 @@ class LoginView extends StatelessWidget {
                     const SizedBox(height: 30),
 
                     // Social Login Buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            // Handle Google login
-                          },
-                          child: Image.asset('assets/icons/google.png',
-                              height: 40),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Handle Facebook login
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                        const SizedBox(width: 20),
-                        GestureDetector(
-                          onTap: () {
-                            // Handle Facebook login
-                          },
-                          child: Image.asset('assets/icons/facebook.png',
-                              height: 40),
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      icon: const Icon(Icons.facebook, color: Colors.white),
+                      label: const Text(
+                        'Login with Facebook',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Handle Google login
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                      ],
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      icon: const Icon(Icons.g_mobiledata, color: Colors.white),
+                      label: const Text(
+                        'Login with Google',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
                     ),
                     const SizedBox(height: 20),
-
-                    // Register Option
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "Don't have an Account? ",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
+                          "Don't have an account? ",
+                          style: TextStyle(fontSize: 16),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -214,11 +224,10 @@ class LoginView extends StatelessWidget {
                                 );
                           },
                           child: const Text(
-                            'Sign up here',
+                            'Create Account',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ),

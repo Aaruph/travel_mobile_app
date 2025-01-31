@@ -8,7 +8,6 @@ import '../../../../home/presentation/view_model/home_cubit.dart';
 import '../../../domain/use_case/login_usecase.dart';
 import '../signup/register_bloc.dart';
 
-
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -76,6 +75,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           },
           (token) {
             emit(state.copyWith(isLoading: false, isSuccess: true));
+            showMySnackBar(context: event.context, message: "Login Successful");
             add(
               NavigateHomeScreenEvent(
                 context: event.context,

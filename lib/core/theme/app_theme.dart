@@ -4,14 +4,14 @@
 //   return ThemeData(
 //     primarySwatch: Colors.orange,
 //     scaffoldBackgroundColor: Colors.white,
-//     fontFamily: 'Poppins Bold',
+//     fontFamily: 'Lora  Bold',
 //     elevatedButtonTheme: ElevatedButtonThemeData(
 //       style: ElevatedButton.styleFrom(
 //         textStyle: const TextStyle(
 //             fontSize: 16,
 //             color: Colors.white,
 //             fontWeight: FontWeight.w500,
-//             fontFamily: 'Poppins Regular'),
+//             fontFamily: 'Lora  Regular'),
 //         backgroundColor: Colors.orange,
 //         shape: RoundedRectangleBorder(
 //           borderRadius: BorderRadius.circular(30),
@@ -36,7 +36,7 @@ class AppTheme {
           backgroundColor: ThemeConstant.appBarColor,
           centerTitle: true,
           titleTextStyle: TextStyle(
-              color: Colors.red, fontSize: 30, fontFamily: 'Poppins Regular'),
+              color: Colors.red, fontSize: 30, fontFamily: 'Lora Regular'),
         ),
 
         // Change elevated button theme
@@ -46,7 +46,7 @@ class AppTheme {
             foregroundColor: Colors.white,
             backgroundColor: ThemeConstant.primaryColor,
             textStyle:
-                const TextStyle(fontSize: 20, fontFamily: 'Poppins Regular'),
+                const TextStyle(fontSize: 20, fontFamily: 'Lora Regular'),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -57,7 +57,7 @@ class AppTheme {
         inputDecorationTheme: const InputDecorationTheme(
           contentPadding: EdgeInsets.all(15),
           border: OutlineInputBorder(),
-          labelStyle: TextStyle(fontSize: 20, fontFamily: 'Poppins Regular'),
+          labelStyle: TextStyle(fontSize: 20, fontFamily: 'Lora Regular'),
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.red,
@@ -76,40 +76,40 @@ class AppTheme {
         //Bottom navigation bar theme
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Colors.white,
-          selectedItemColor: Color(0xFFFE5404),
+          selectedItemColor: Color(0xFF008FA0),
           unselectedItemColor: Colors.black,
           type: BottomNavigationBarType.fixed,
           elevation: 0,
         ),
-        // Define global text theme with Poppins Regular and Bold
+        // Define global text theme with Lora  Regular and Bold
         textTheme: const TextTheme(
           bodyLarge: TextStyle(
-            fontFamily: 'Poppins Regular',
+            fontFamily: 'Lora Regular',
             fontSize: 16,
             fontWeight: FontWeight.w400, // Regular
           ),
           bodyMedium: TextStyle(
-            fontFamily: 'Poppins Regular',
+            fontFamily: 'Lora Regular',
             fontSize: 14,
             fontWeight: FontWeight.w400, // Regular
           ),
           titleLarge: TextStyle(
-            fontFamily: 'Poppin Regular',
+            fontFamily: 'Lora Regular',
             fontSize: 20,
             fontWeight: FontWeight.bold, // Bold
           ),
           headlineMedium: TextStyle(
-            fontFamily: 'Poppins Regular',
+            fontFamily: 'Lora Regular',
             fontSize: 18,
             fontWeight: FontWeight.bold, // Bold
           ),
           headlineSmall: TextStyle(
-            fontFamily: 'Poppins Regular',
+            fontFamily: 'Lora Regular',
             fontSize: 16,
             fontWeight: FontWeight.w400, // Regular
           ),
           labelLarge: TextStyle(
-            fontFamily: 'Poppins  Regular',
+            fontFamily: 'Lora Regular',
             fontSize: 14,
             fontWeight: FontWeight.bold, // Bold
           ),

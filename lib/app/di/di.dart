@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_mobile_app/app/shared_prefs/token_shared_prefs.dart';
+import 'package:travel_mobile_app/core/network/api_service.dart';
 import 'package:travel_mobile_app/core/network/hive_service.dart';
 import 'package:travel_mobile_app/features/auth/data/data_source/local_data_source/auth_local_datasource.dart';
 import 'package:travel_mobile_app/features/auth/data/data_source/remote_data_source/auth_remote_datasource.dart';
@@ -19,7 +20,9 @@ import 'package:travel_mobile_app/features/splash/presentation/view_model/splash
 final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
-  _initHiveService();
+  await _initHiveService();
+  await _initApiService();
+  await _initSharedPreferences();
   await _initHomeDependencies();
   await _initRegisterDependencies();
   await _initLoginDependencies();
@@ -30,6 +33,17 @@ Future<void> initDependencies() async {
 _initHiveService() {
   getIt.registerLazySingleton<HiveService>(
     () => HiveService(),
+  );
+}
+
+Future<void> _initSharedPreferences() async {
+  final sharedPreferences = await SharedPreferences.getInstance();
+  getIt.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+}
+
+_initApiService() {
+  getIt.registerLazySingleton<Dio>(
+    () => ApiService(Dio()).dio,
   );
 }
 
@@ -79,12 +93,9 @@ _initRegisterDependencies() {
 }
 
 _initLoginDependencies() async {
-   getIt.registerLazySingleton<TokenSharedPrefs>(
+  getIt.registerLazySingleton<TokenSharedPrefs>(
     () => TokenSharedPrefs(getIt<SharedPreferences>()),
   );
- 
-
-
 }
 
 _initSplashScreenDependencies() async {

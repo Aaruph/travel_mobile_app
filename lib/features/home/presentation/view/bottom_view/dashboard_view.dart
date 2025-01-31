@@ -6,221 +6,216 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.orange,
         elevation: 0,
-        automaticallyImplyLeading: false,
-        title: const Padding(
-          padding: EdgeInsets.only(right: 20.0),
-          child: Row(
-            children: [
-              Icon(Icons.location_on, color: Colors.white),
-              SizedBox(width: 5),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    'P82+2R9, Rudramati Marga, Kathmandu 44605, N...',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-              Icon(Icons.message, color: Colors.white), // Messenger icon
-              SizedBox(width: 10), // Space between the two icons
-              Icon(Icons.notifications_none, color: Colors.white),
-            ],
-          ),
+        backgroundColor: Colors.white,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Location",
+                style: TextStyle(fontSize: 14, color: Colors.grey)),
+            Row(
+              children: [
+                Icon(Icons.location_on, color: Colors.teal, size: 16),
+                Text("Kathmandu, Nepal",
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ],
+            )
+          ],
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications_none),
+            onPressed: () {},
+          )
+        ],
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search Bar
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search your food',
-                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.black),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 15),
-
-              // Combo Banner
-              Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.yellow[700],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'DHAMAKA\nCOMBO',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {}, // Add functionality
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                            ),
-                          ),
-                          child: const Text(
-                            'Order Now',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Image.asset(
-                      'assets/images/combo.png',
-                      height: 70,
-                    ), // Replace with actual image asset
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15),
-
-              // Categories Section
-              _buildSectionHeader('Categories', () {}),
-              const SizedBox(height: 10),
-              _buildHorizontalList([
-                _buildCategoryItem('Foods', 'assets/images/momo.jpg'),
-                _buildCategoryItem('Pizza', 'assets/images/burger.jpg'),
-                _buildCategoryItem('Bakery', 'assets/images/pizza.jpg'),
-                _buildCategoryItem('Dessert', 'assets/images/dessert.jpg'),
-                _buildCategoryItem('Drinks', 'assets/images/drink.jpg'),
-              ]),
-              const SizedBox(height: 15),
-
-              // Popular Now Section
-              _buildSectionHeader('Popular Now', () {}),
-              const SizedBox(height: 10),
-              _buildHorizontalList([
-                _buildFoodItem(
-                    'Chicken Burger', 'assets/images/burger.jpg', 300),
-                _buildFoodItem('Pizza', 'assets/images/pizza.jpg', 800),
-                _buildFoodItem('Noodles', 'assets/images/noodles.jpg', 500),
-                _buildFoodItem('Chicken Tandoori',
-                    'assets/images/chicken_tandoori.jpg', 600),
-              ]),
-              const SizedBox(height: 15),
-
-              // Hunger End Special Section
-              _buildSectionHeader('HUNGER END Special', () {}),
-              const SizedBox(height: 10),
-              _buildHorizontalList([
-                _buildFoodItem(
-                    'Chicken Biryani', 'assets/images/biryani.jpg', 300),
-                _buildFoodItem(
-                    'Keema Noodles', 'assets/images/noodles.jpg', 250),
-                _buildFoodItem(
-                    'Chicken Choila', 'assets/images/chicken_choila.png', 250),
-                _buildFoodItem(
-                    'Chicken Burger', 'assets/images/burger.jpg', 500),
-              ]),
-            ],
-          ),
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSearchBar(),
+            SizedBox(height: 16),
+            _buildCategoryFilters(),
+            SizedBox(height: 16),
+            _buildSectionHeader("Top Trips"),
+            _buildTopTrips(),
+            SizedBox(height: 16),
+            _buildSectionHeader("Group Trips"),
+            _buildGroupTrips(),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildSectionHeader(String title, VoidCallback onTap) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        GestureDetector(
-          onTap: onTap,
-          child: const Text(
-            'See All',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHorizontalList(List<Widget> items) {
-    return SizedBox(
-      height: 120,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: items,
+  Widget _buildSearchBar() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(12),
       ),
-    );
-  }
-
-  Widget _buildCategoryItem(String name, String image) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
+      child: Row(
         children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(30),
+          Icon(Icons.search, color: Colors.grey),
+          SizedBox(width: 8),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Search",
+                border: InputBorder.none,
+              ),
             ),
-            child: Image.asset(image), // Replace with actual image
           ),
-          const SizedBox(height: 5),
-          Text(name, style: const TextStyle(fontSize: 12)),
+          Icon(Icons.filter_list, color: Colors.teal),
         ],
       ),
     );
   }
 
-  Widget _buildFoodItem(String name, String image, int price) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          Container(
-            width: 100,
-            height: 80,
+  Widget _buildCategoryFilters() {
+    List<Map<String, dynamic>> categories = [
+      {"icon": Icons.waves, "label": "Lakes"},
+      {"icon": Icons.terrain, "label": "Mountain"},
+      {"icon": Icons.forest, "label": "Forest"},
+      {"icon": Icons.beach_access, "label": "Sea"},
+    ];
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: categories
+          .map((category) => Chip(
+                avatar: Icon(category["icon"], color: Colors.teal),
+                label: Text(category["label"]),
+                backgroundColor: Colors.teal[50],
+              ))
+          .toList(),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        TextButton(
+            onPressed: () {},
+            child: Text("See All", style: TextStyle(color: Colors.teal)))
+      ],
+    );
+  }
+
+  Widget _buildTopTrips() {
+    List<Map<String, dynamic>> trips = [
+      {
+        "image": "assets/images/rara_lake.jpg",
+        "title": "Rara Lake",
+        "rating": 4.5,
+        "price": "\$40 /Visit"
+      },
+      {
+        "image": "assets/images/tilicho_lake.jpg",
+        "title": "Tilicho Lake",
+        "rating": 4.5,
+        "price": "\$40 /Visit"
+      },
+      {
+        "image": "assets/images/shey_phoksundo_lake.jpg",
+        "title": "Shey-Phoksundo",
+        "rating": 4.5,
+        "price": "\$40 /Visit"
+      },
+    ];
+
+    return SizedBox(
+      height: 220,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: trips.length,
+        itemBuilder: (context, index) {
+          var trip = trips[index];
+          return Container(
+            width: 170,
+            margin: EdgeInsets.only(right: 12),
             decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.shade200, blurRadius: 4, spreadRadius: 2)
+              ],
             ),
-            child: Image.asset(image,
-                fit: BoxFit.cover), // Replace with actual image
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                  child: Image.asset(trip["image"],
+                      height: 120, width: double.infinity, fit: BoxFit.cover),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(trip["title"],
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                      Row(
+                        children: [
+                          Icon(Icons.star, color: Colors.amber, size: 16),
+                          Text(trip["rating"].toString(),
+                              style: TextStyle(fontSize: 14)),
+                        ],
+                      ),
+                      Text(trip["price"],
+                          style: TextStyle(
+                              color: Colors.teal, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildGroupTrips() {
+    return Container(
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.teal[50],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset("assets/images/mountain_trip.jpg",
+                height: 120, fit: BoxFit.cover),
           ),
-          const SizedBox(height: 5),
-          Text(name, style: const TextStyle(fontSize: 12)),
-          Text('Rs. $price',
-              style: const TextStyle(fontSize: 12, color: Colors.orange)),
+          SizedBox(height: 8),
+          Text("Mountain Trip",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text("Mount Everest Base Camp"),
+          Row(
+            children: [
+              Icon(Icons.location_on, size: 16, color: Colors.teal),
+              Text(" Nepal"),
+              Spacer(),
+              Text("80%"),
+            ],
+          ),
+          SizedBox(height: 4),
+          LinearProgressIndicator(value: 0.8, color: Colors.teal),
         ],
       ),
     );
