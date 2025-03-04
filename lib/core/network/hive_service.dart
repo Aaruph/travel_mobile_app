@@ -9,7 +9,7 @@ import '../../features/auth/data/model/auth_hive_model.dart';
 class HiveService {
   Future<void> init() async {
     var directory = await getApplicationDocumentsDirectory();
-    var path = '${directory.path}hunger_end.db';
+    var path = '${directory.path}trvel_app.db';
 
     Hive.init(path);
     Hive.registerAdapter(AuthHiveModelAdapter());

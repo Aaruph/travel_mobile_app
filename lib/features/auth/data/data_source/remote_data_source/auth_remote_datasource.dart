@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+
 import '../../../../../app/constants/api_endpoints.dart';
 import '../../../domain/entity/auth_entity.dart';
 import '../auth_data_source.dart';
@@ -9,7 +10,7 @@ class AuthRemoteDataSource implements IAuthDataSource {
   final Dio _dio;
 
   AuthRemoteDataSource(this._dio);
-  
+
   @override
   Future<void> registerCustomer(AuthEntity customer) async {
     try {
@@ -25,7 +26,7 @@ class AuthRemoteDataSource implements IAuthDataSource {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return;
       } else {
         throw Exception(response.statusMessage);

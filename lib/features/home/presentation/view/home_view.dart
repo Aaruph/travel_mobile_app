@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../view_model/home_cubit.dart';
 import '../view_model/home_state.dart';
 
-
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
@@ -26,10 +25,10 @@ class HomeView extends StatelessWidget {
                 icon: Icon(Icons.favorite_border),
                 label: 'Wishlist',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart_outlined),
-                label: 'Cart',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.shopping_cart_outlined),
+              //   label: 'Cart',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.mail_outline),
                 label: 'Inbox',
@@ -52,4 +51,3 @@ class HomeView extends StatelessWidget {
     );
   }
 }
-

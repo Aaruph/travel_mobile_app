@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../productdetail/productdetail_view.dart';
+
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
 
@@ -42,7 +44,7 @@ class DashboardView extends StatelessWidget {
             _buildCategoryFilters(),
             SizedBox(height: 16),
             _buildSectionHeader("Top Trips"),
-            _buildTopTrips(),
+            _buildTopTrips(context),
             SizedBox(height: 16),
             _buildSectionHeader("Group Trips"),
             _buildGroupTrips(),
@@ -110,25 +112,34 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  Widget _buildTopTrips() {
+  Widget _buildTopTrips(BuildContext context) {
     List<Map<String, dynamic>> trips = [
       {
         "image": "assets/images/rara_lake.jpg",
         "title": "Rara Lake",
+        "location": "Nepal",
         "rating": 4.5,
-        "price": "\$40 /Visit"
+        "price": "\$40 /Visit",
+        "description":
+            "Rara Lake is one of the most beautiful lakes in Nepal, known for its stunning scenery and pristine environment."
       },
       {
         "image": "assets/images/tilicho_lake.jpg",
         "title": "Tilicho Lake",
+        "location": "Manang",
         "rating": 4.5,
-        "price": "\$40 /Visit"
+        "price": "\$40 /Visit",
+        "description":
+            "Tilicho Lake, located at 4,949m, is the highest altitude lake in the world, surrounded by breathtaking mountains."
       },
       {
         "image": "assets/images/shey_phoksundo_lake.jpg",
         "title": "Shey-Phoksundo",
+        "location": "Nepal",
         "rating": 4.5,
-        "price": "\$40 /Visit"
+        "price": "\$40 /Visit",
+        "description":
+            "Shey-Phoksundo Lake is a deep blue lake in Nepal, famous for its unique turquoise color and scenic surroundings."
       },
     ];
 
@@ -139,47 +150,69 @@ class DashboardView extends StatelessWidget {
         itemCount: trips.length,
         itemBuilder: (context, index) {
           var trip = trips[index];
-          return Container(
-            width: 170,
-            margin: EdgeInsets.only(right: 12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.shade200, blurRadius: 4, spreadRadius: 2)
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                  child: Image.asset(trip["image"],
-                      height: 120, width: double.infinity, fit: BoxFit.cover),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(trip["title"],
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Row(
-                        children: [
-                          Icon(Icons.star, color: Colors.amber, size: 16),
-                          Text(trip["rating"].toString(),
-                              style: TextStyle(fontSize: 14)),
-                        ],
-                      ),
-                      Text(trip["price"],
-                          style: TextStyle(
-                              color: Colors.teal, fontWeight: FontWeight.bold)),
-                    ],
+          return GestureDetector(
+            onTap: () {
+              // Navigate to ProductDetailView
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailView(
+                    image: trip["image"],
+                    title: trip["title"],
+                    location: trip["location"],
+                    rating: trip["rating"],
+                    description: trip["description"],
+                    price: trip["price"],
                   ),
-                )
-              ],
+                ),
+              );
+            },
+            child: Container(
+              width: 170,
+              margin: EdgeInsets.only(right: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.shade200,
+                      blurRadius: 4,
+                      spreadRadius: 2)
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(12)),
+                    child: Image.asset(trip["image"],
+                        height: 120, width: double.infinity, fit: BoxFit.cover),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(trip["title"],
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Row(
+                          children: [
+                            Icon(Icons.star, color: Colors.amber, size: 16),
+                            Text(trip["rating"].toString(),
+                                style: TextStyle(fontSize: 14)),
+                          ],
+                        ),
+                        Text(trip["price"],
+                            style: TextStyle(
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
