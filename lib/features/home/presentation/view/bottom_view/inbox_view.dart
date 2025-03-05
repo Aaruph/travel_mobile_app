@@ -10,8 +10,8 @@ class InboxView extends StatelessWidget {
         title: const Text(
           "Chat Room",
           style: TextStyle(
-            color: Colors.white, // ✅ White color
-            fontWeight: FontWeight.bold, // ✅ Bold text
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.teal,
@@ -50,6 +50,7 @@ class InboxView extends StatelessWidget {
             child: ListView(
               children: [
                 _chatItem(
+                  context,
                   name: "Jessie Cooper",
                   message: "See you next week!",
                   time: "09:32 AM",
@@ -57,46 +58,25 @@ class InboxView extends StatelessWidget {
                   isHighlighted: true,
                 ),
                 _chatItem(
+                  context,
                   name: "Shawn Jones",
                   message: "That's Great, Thank you!",
                   time: "06:20 AM",
                   image: "assets/images/user2.jpg",
                 ),
                 _chatItem(
+                  context,
                   name: "Manang Trip",
                   message: "📷 Image",
                   time: "09:32 PM",
                   image: "assets/images/group_chat.jpg",
                 ),
                 _chatItem(
+                  context,
                   name: "Alexandria Lexi",
                   message: "🎙 Voice Message 3:02",
                   time: "08:45 AM",
                   image: "assets/images/user3.jpg",
-                ),
-                _chatItem(
-                  name: "Mary James",
-                  message: "Waiting for you",
-                  time: "09:32 AM",
-                  image: "assets/images/user4.jpg",
-                ),
-                _chatItem(
-                  name: "Tom Parker",
-                  message: "It's at 3:30 sharp",
-                  time: "09:32 AM",
-                  image: "assets/images/user5.jpg",
-                ),
-                _chatItem(
-                  name: "Ali Ahmed",
-                  message: "🎉 Gif",
-                  time: "09:32 AM",
-                  image: "assets/images/user6.jpg",
-                ),
-                _chatItem(
-                  name: "Mariam Ali",
-                  message: "🎉 Gif",
-                  time: "09:32 AM",
-                  image: "assets/images/user7.jpg",
                 ),
               ],
             ),
@@ -106,49 +86,91 @@ class InboxView extends StatelessWidget {
     );
   }
 
-  Widget _chatItem({
+  Widget _chatItem(
+    BuildContext context, {
     required String name,
     required String message,
     required String time,
     required String image,
     bool isHighlighted = false,
   }) {
-    return Container(
-      color: isHighlighted ? Colors.blue[50] : Colors.white,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      child: Row(
-        children: [
-          // Profile Image
-          CircleAvatar(
-            radius: 24,
-            backgroundImage: AssetImage(image),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatDetailView(name: name, image: image),
           ),
-          const SizedBox(width: 12),
-          // Chat Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  message,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+        );
+      },
+      child: Container(
+        color: isHighlighted ? Colors.blue[50] : Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 24,
+              backgroundImage: AssetImage(image),
             ),
-          ),
-          // Timestamp
-          Text(
-            time,
-            style: TextStyle(color: Colors.grey[500], fontSize: 12),
-          ),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    message,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              time,
+              style: TextStyle(color: Colors.grey[500], fontSize: 12),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ✅ Chat Detail Screen
+class ChatDetailView extends StatelessWidget {
+  final String name;
+  final String image;
+
+  const ChatDetailView({super.key, required this.name, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(name),
+        backgroundColor: Colors.teal,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage(image),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              "Chat with $name",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
