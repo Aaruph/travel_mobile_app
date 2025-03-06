@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_mobile_app/core/theme/theme_provider.dart';
+import 'package:travel_mobile_app/core/theme/user_provider.dart';
+import 'package:travel_mobile_app/features/auth/presentation/view/login_view.dart';
 import 'package:travel_mobile_app/features/home/presentation/view/editprofile/editprofile_view.dart';
+import 'package:travel_mobile_app/features/home/presentation/view/personalinfo/personalinfo_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -9,15 +12,13 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Profile',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: Colors.teal,
@@ -53,19 +54,17 @@ class ProfileView extends StatelessWidget {
                 const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'ishowspeed',
-                      style: TextStyle(
+                      userProvider.name,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      'ishowspeed@gmail.com',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
+                      userProvider.email,
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   ],
                 ),
@@ -78,14 +77,55 @@ class ProfileView extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                _buildProfileOption(Icons.person, 'Personal Information'),
-                _buildProfileOption(Icons.feedback, 'Feedback'),
-                _buildProfileOption(Icons.favorite, 'My Favourites'),
-                _buildProfileOptionWithBadge(
-                    Icons.notifications, 'Notifications', 2),
-                _buildProfileOption(Icons.chat, 'Message Center'),
-                _buildProfileOption(Icons.location_on, 'Address'),
-                _buildProfileOption(Icons.settings, 'Settings'),
+                _buildProfileOption(
+                  Icons.person,
+                  'Personal Information',
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PersonalInfoView(),
+                      ),
+                    );
+                  },
+                ),
+                _buildProfileOption(
+                  Icons.favorite,
+                  'My Favourites',
+                  () {
+                    // Navigate to Favourites Screen (if implemented)
+                  },
+                ),
+                _buildProfileOption(
+                  Icons.settings,
+                  'Settings',
+                  () {
+                    // Navigate to Settings Screen (if implemented)
+                  },
+                ),
+
+                // Help Section
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'Help',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                _buildProfileOption(
+                  Icons.info,
+                  'About Us',
+                  () {
+                    // Navigate to About Us Screen (if implemented)
+                  },
+                ),
+                _buildProfileOption(
+                  Icons.contact_mail,
+                  'Contact Us',
+                  () {
+                    // Navigate to Contact Us Screen (if implemented)
+                  },
+                ),
 
                 // 🔥 Dark Mode Toggle Switch
                 SwitchListTile(
@@ -123,40 +163,12 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileOption(IconData icon, String title) {
+  Widget _buildProfileOption(IconData icon, String title, VoidCallback onTap) {
     return ListTile(
       leading: Icon(icon),
       title: Text(title),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {},
-    );
-  }
-
-  Widget _buildProfileOptionWithBadge(
-      IconData icon, String title, int badgeCount) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(title),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (badgeCount > 0)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                badgeCount.toString(),
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-              ),
-            ),
-          const SizedBox(width: 8),
-          const Icon(Icons.arrow_forward_ios, size: 16),
-        ],
-      ),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 
@@ -170,13 +182,18 @@ class ProfileView extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context); // Close the dialog without any action
               },
               child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context); // Close the dialog
+                // After confirming logout, navigate to the LoginView
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginView()),
+                );
               },
               child: const Text("Logout", style: TextStyle(color: Colors.teal)),
             ),
