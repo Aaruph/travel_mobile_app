@@ -9,10 +9,13 @@ class EditProfileView extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Edit Profile',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.white, // ✅ White color
+            fontWeight: FontWeight.bold, // ✅ Bold text
+          ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.teal,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -28,8 +31,8 @@ class EditProfileView extends StatelessWidget {
             const SizedBox(height: 10),
             const CircleAvatar(
               radius: 50,
-              backgroundImage: NetworkImage(
-                'https://example.com/profile-image.jpg', // Replace with actual image URL
+              backgroundImage: AssetImage(
+                'assets/images/ishowspeed.jpg', // Replace with actual image URL
               ),
             ),
             const SizedBox(height: 10),

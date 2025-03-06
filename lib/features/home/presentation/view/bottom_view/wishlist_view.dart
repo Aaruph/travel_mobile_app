@@ -1,8 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:travel_mobile_app/features/home/presentation/view/booking/booking_view.dart';
 
-class WishlistView extends StatelessWidget {
+class WishlistView extends StatefulWidget {
   const WishlistView({super.key});
+
+  @override
+  State<WishlistView> createState() => _WishlistViewState();
+}
+
+class _WishlistViewState extends State<WishlistView> {
+  final List<Map<String, dynamic>> _events = [
+    {
+      "title": "Rara Lake",
+      "location": "Nepal",
+      "image": "assets/images/rara_lake.jpg",
+      "rating": 4.5,
+      "price": "\$40 / Visit",
+    },
+    {
+      "title": "Tilicho Lake",
+      "location": "Nepal",
+      "image": "assets/images/tilicho_lake.jpg",
+      "rating": 4.5,
+      "price": "\$40 / Visit",
+    },
+  ];
+
+  final List<Map<String, dynamic>> _packages = [
+    {
+      "title": "Mountain Trip",
+      "location": "Manang",
+      "image": "assets/images/mount_everest.jpg",
+      "rating": 4.5,
+      "price": "\$120 / Three day visit",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -10,10 +42,7 @@ class WishlistView extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "Saved Trips",
-          style: TextStyle(
-            color: Colors.white, // ✅ White color
-            fontWeight: FontWeight.bold, // ✅ Bold text
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.teal,
         elevation: 0,
@@ -28,44 +57,45 @@ class WishlistView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Events Section
-            const Text(
-              "Events",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            _wishlistCard(
-              context,
-              "Rara Lake",
-              "Nepal",
-              "assets/images/rara_lake.jpg",
-              4.5,
-              "\$40 / Visit",
-            ),
-            _wishlistCard(
-              context,
-              "Tilicho Lake",
-              "Nepal",
-              "assets/images/tilicho_lake.jpg",
-              4.5,
-              "\$60 / Visit",
-            ),
-
-            const SizedBox(height: 16),
+            if (_events.isNotEmpty) ...[
+              const Text(
+                "Events",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              ..._events.map((event) {
+                return _wishlistCard(
+                  context,
+                  event["title"],
+                  event["location"],
+                  event["image"],
+                  event["rating"],
+                  event["price"],
+                  isPackage: false,
+                );
+              }),
+              const SizedBox(height: 16),
+            ],
 
             // Packages Section
-            const Text(
-              "Packages",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            _wishlistCard(
-              context,
-              "Hotel Manang",
-              "Manang",
-              "assets/images/mount_everest.jpg",
-              4.5,
-              "\$120 / 3 day visit",
-            ),
+            if (_packages.isNotEmpty) ...[
+              const Text(
+                "Packages",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              ..._packages.map((package) {
+                return _wishlistCard(
+                  context,
+                  package["title"],
+                  package["location"],
+                  package["image"],
+                  package["rating"],
+                  package["price"],
+                  isPackage: true,
+                );
+              }),
+            ],
           ],
         ),
       ),
@@ -78,8 +108,9 @@ class WishlistView extends StatelessWidget {
     String location,
     String image,
     double rating,
-    String price,
-  ) {
+    String price, {
+    required bool isPackage,
+  }) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       margin: const EdgeInsets.only(bottom: 12),
@@ -130,31 +161,54 @@ class WishlistView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BookingView(
-                          title: title,
-                          location: location,
-                          rating: rating,
-                          price: double.parse(price.replaceAll(
-                              RegExp(r'[^0-9.]'), '')), // Extract numeric price
+                Row(
+                  children: [
+                    // Book Button
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                    );
-                  },
-                  child: const Text("Book Now",
-                      style: TextStyle(fontSize: 12, color: Colors.white)),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookingView(
+                              title: title,
+                              location: location,
+                              rating: rating,
+                              price: double.parse(price.replaceAll(
+                                  RegExp(r'[^0-9.]'),
+                                  '')), // Extract numeric price
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Text("Book Now",
+                          style: TextStyle(fontSize: 12, color: Colors.white)),
+                    ),
+
+                    // Show Delete Button for Both Events and Packages
+                    const SizedBox(width: 8),
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {
+                        setState(() {
+                          if (isPackage) {
+                            _packages.removeWhere((package) =>
+                                package["title"] == title); // Remove package
+                          } else {
+                            _events.removeWhere((event) =>
+                                event["title"] == title); // Remove event
+                          }
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

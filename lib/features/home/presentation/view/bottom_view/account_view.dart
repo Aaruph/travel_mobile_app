@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_mobile_app/core/theme/theme_provider.dart';
 import 'package:travel_mobile_app/features/home/presentation/view/editprofile/editprofile_view.dart';
 
 class ProfileView extends StatelessWidget {
@@ -6,14 +8,16 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Profile',
           style: TextStyle(
-            color: Colors.white, // ✅ White color
-            fontWeight: FontWeight.bold, // ✅ Bold text
-          ), // ✅ White text
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         backgroundColor: Colors.teal,
@@ -23,14 +27,13 @@ class ProfileView extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit,
-                color: Colors.white), // ✅ Edit profile icon
+            icon: const Icon(Icons.edit, color: Colors.white),
             onPressed: () {
-              // Navigate to Edit Profile Screen
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const EditProfileView()),
+                  builder: (context) => const EditProfileView(),
+                ),
               );
             },
           ),
@@ -45,9 +48,7 @@ class ProfileView extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: 35,
-                  backgroundImage: NetworkImage(
-                    'https://example.com/profile-image.jpg', // Replace with actual image URL
-                  ),
+                  backgroundImage: AssetImage('assets/images/ishowspeed.jpg'),
                 ),
                 const SizedBox(width: 12),
                 Column(
@@ -85,6 +86,18 @@ class ProfileView extends StatelessWidget {
                 _buildProfileOption(Icons.chat, 'Message Center'),
                 _buildProfileOption(Icons.location_on, 'Address'),
                 _buildProfileOption(Icons.settings, 'Settings'),
+
+                // 🔥 Dark Mode Toggle Switch
+                SwitchListTile(
+                  title: const Text('Dark Mode'),
+                  secondary: Icon(themeProvider.themeMode == ThemeMode.dark
+                      ? Icons.dark_mode
+                      : Icons.light_mode),
+                  value: themeProvider.themeMode == ThemeMode.dark,
+                  onChanged: (value) {
+                    themeProvider.toggleTheme();
+                  },
+                ),
               ],
             ),
           ),
@@ -95,9 +108,8 @@ class ProfileView extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 150.0, vertical: 50),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal, // ✅ Logout button color
-                minimumSize:
-                    const Size(double.infinity, 50), // Full-width button
+                backgroundColor: Colors.teal,
+                minimumSize: const Size(double.infinity, 50),
               ),
               onPressed: () {
                 _showLogoutDialog(context);
@@ -116,9 +128,7 @@ class ProfileView extends StatelessWidget {
       leading: Icon(icon),
       title: Text(title),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {
-        // Add navigation or actions
-      },
+      onTap: () {},
     );
   }
 
@@ -139,23 +149,17 @@ class ProfileView extends StatelessWidget {
               ),
               child: Text(
                 badgeCount.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
+                style: const TextStyle(color: Colors.white, fontSize: 12),
               ),
             ),
           const SizedBox(width: 8),
           const Icon(Icons.arrow_forward_ios, size: 16),
         ],
       ),
-      onTap: () {
-        // Add navigation or actions
-      },
+      onTap: () {},
     );
   }
 
-  // Logout Confirmation Dialog
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -166,14 +170,13 @@ class ProfileView extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close dialog
+                Navigator.pop(context);
               },
               child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close dialog
-                // TODO: Implement logout logic (e.g., clear session, navigate to login screen)
+                Navigator.pop(context);
               },
               child: const Text("Logout", style: TextStyle(color: Colors.teal)),
             ),

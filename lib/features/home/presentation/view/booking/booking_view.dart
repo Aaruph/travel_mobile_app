@@ -23,8 +23,14 @@ class BookingView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Booking Details"),
-        backgroundColor: Colors.white,
+        title: const Text(
+          "Booking Details",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.teal,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
