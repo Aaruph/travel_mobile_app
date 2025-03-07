@@ -14,27 +14,27 @@ class _PaymentDetailViewState extends State<PaymentDetailView> {
     {
       'name': 'FonePay',
       'description': 'Pay using fonePay QR upon Delivery',
-      'icon': 'assets/images/hiking.png'
+      'icon': 'assets/images/fonepay.png'
     },
     {
       'name': 'eSewa',
       'description': 'Pay online using eSewa digital wallet',
-      'icon': 'assets/images/hiking.png'
+      'icon': 'assets/images/esewa.png'
     },
     {
       'name': 'IME Pay',
       'description': 'Pay online using IME Pay digital wallet',
-      'icon': 'assets/images/hiking.png'
+      'icon': 'assets/images/imepay.png'
     },
     {
       'name': 'Khalti Digital Wallet',
       'description': 'Pay online using Khalti Digital Wallet',
-      'icon': 'assets/images/hiking.png'
+      'icon': 'assets/images/khalti1.png'
     },
     {
       'name': 'ConnectIPS',
       'description': 'ConnectIPS - Pay Directly from Bank',
-      'icon': 'assets/images/hiking.png'
+      'icon': 'assets/images/connect.png'
     },
   ];
 
